@@ -46,11 +46,9 @@ function proyeccionPorPersona(nombrePersona){
     porcentajesCrecimiento.push(porcentajeCrecimiento) //agrrgamos al arreglo
   }
   
-  
   //en una variable llamar la funcion de mediana
   const medianaPorcentajesCrecimiento = PlatziMath.calcularMediana(porcentajesCrecimiento);
   
-
   //console.log({porcentajesCrecimiento, medianaPorcentajesCrecimiento}); 
 
   const ultimoSalario = trabajos[trabajos.length - 1].salario;
@@ -62,3 +60,42 @@ function proyeccionPorPersona(nombrePersona){
 
   return nuevoSalario;
 }
+
+// Análisis empresarial
+/*{
+  Industrias Mokepon {
+    2018: [salario, salarios, salarios]
+    2019:
+    2025:
+    2026:
+  },
+  Industrias Mokepon: {},
+  Industrias Mokepon: {},
+
+}*/ 
+
+//crear un objeto con todas las empresas y llenar con toda la info
+const empresas = {};
+
+//Recorrer areglo de salarios por cada persona
+for (persona of salarios){
+  //recorremos cada uno de los trabajos de la persona
+  for (trabajo of persona.trabajos){
+    //si la empresa no existe dentro de empresas, la creamos
+    if (!empresas[trabajo.empresa]){
+      empresas[trabajo.empresa] = {}; //crea objeto
+    }
+    //checamos si tiene la propiedad de nombre
+    if (!empresas[trabajo.empresa][trabajo.year]){
+      empresas[trabajo.empresa][trabajo.year] = []; //crear array
+    }
+
+    //Insertar el salario, a la empresa con el valor nombre y año
+    empresas[trabajo.empresa][trabajo.year].push(trabajo.salario);
+
+  }
+}
+
+console.log({empresas});
+
+
