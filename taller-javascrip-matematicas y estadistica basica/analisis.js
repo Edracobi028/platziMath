@@ -53,26 +53,10 @@ function proyeccionPorPersona(nombrePersona){
 
   const ultimoSalario = trabajos[trabajos.length - 1].salario;
   const aumento = ultimoSalario * medianaPorcentajesCrecimiento;
-
   const nuevoSalario = ultimoSalario + aumento;
-
-  console.log({nuevoSalario});
 
   return nuevoSalario;
 }
-
-// Análisis empresarial
-/*{
-  Industrias Mokepon {
-    2018: [salario, salarios, salarios]
-    2019:
-    2025:
-    2026:
-  },
-  Industrias Mokepon: {},
-  Industrias Mokepon: {},
-
-}*/ 
 
 //crear un objeto con todas las empresas y llenar con toda la info
 const empresas = {};
@@ -110,5 +94,46 @@ function medianaEmpresaYear(nombre, year){
     return PlatziMath.calcularMediana(empresas[nombre][year]);
   }
 }
+
+//crear un array de lista de medianas de cada array
+
+function proyeccionPorEmpresa(nombre) {
+  //validar si la elnombre de empresa es valido
+  if(!empresas[nombre]){
+    console.warn('La empresa no existe');
+  }else {
+    //obtener los años
+    const empresaYears = Object.keys(empresas[nombre]);
+
+    //por cada año sacar la mediana
+    const listaMedianaYears = empresaYears.map( (year) => {
+      return medianaEmpresaYear(nombre,year); //por cada año mandar a llamar a la funcion de mediana
+    });
+
+    //Hacer un arreglo con los incrementos de cada año
+    let porcentajesCrecimiento = [];
+
+    //for donde empieze de la posición uno
+    for (let i = 1; i < listaMedianaYears.length; i++){
+      const salarioActual = listaMedianaYears[i]; //ya que es objeto añadimos .salrio
+      const salarioPasado = listaMedianaYears[i - 1];
+      const crecimiento = salarioActual - salarioPasado;
+      const porcentajeCrecimiento = crecimiento / salarioPasado;
+      porcentajesCrecimiento.push(porcentajeCrecimiento) //agrrgamos al arreglo
+    }
+    
+    //en una variable llamar la funcion de mediana
+    const medianaPorcentajesCrecimiento = PlatziMath.calcularMediana(porcentajesCrecimiento);
+
+    const ultimaMediana = listaMedianaYears[listaMedianaYears.length - 1];
+    const aumento = ultimaMediana * medianaPorcentajesCrecimiento;
+    const nuevaMediana = ultimaMediana + aumento;
+
+    return nuevaMediana;
+
+
+  }
+}
+
 
 
