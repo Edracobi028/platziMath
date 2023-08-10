@@ -26,7 +26,7 @@ function medianaPorPersona(nombrePersona) {
   //en una variable mandamos a llamar la funcion para calcular mediana desde la clase Principal
   const medianaSalarios = PlatziMath.calcularMediana(salarios);
 
-  console.log(medianaSalarios);
+  //console.log(medianaSalarios);
   return medianaSalarios;
 }
 
@@ -133,6 +133,35 @@ function proyeccionPorEmpresa(nombre) {
 
 
   }
+}
+
+//Análisis general
+function medianaGeneral(){
+  //Arreglo de nombres donde nombramos al elemento principal como persona y traemos solo los nombres, incluyendo la llamada de la funcion que obtiene la mediana
+  const listaMedianas = salarios.map( 
+    persona => medianaPorPersona(persona.name)
+  );
+  //por cada nombre mandar a llamar la funcion
+  const mediana = PlatziMath.calcularMediana(listaMedianas);
+
+  return mediana;
+}
+
+function medianaTop10() {
+  const listaMedianas = salarios.map(
+    persona => medianaPorPersona(persona.name)
+  );
+
+  const medianasOrdenadas = PlatziMath.ordenarLista(listaMedianas);
+
+  const cantidad = listaMedianas.length / 10;
+  const limite = listaMedianas.length - cantidad;
+
+  //Crear un arreglo desde el limite al final
+  const top10 = medianasOrdenadas.slice(limite, medianasOrdenadas.length);
+
+  const medianaTop10 = PlatziMath.calcularMediana(top10);
+  return medianaTop10;
 }
 
 
